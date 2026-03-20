@@ -17,7 +17,7 @@ sourceCompatibility = targetCompatibility = '1.8'
 compileJava.options.encoding = 'UTF-8'
 
 minecraft {
-    version = '1.12.2-14.23.5.2860'
+    version = '1.12.2-14.23.5.2855'
     runDir = 'run'
     mappings = 'snapshot_20171003'
 }
@@ -25,12 +25,10 @@ minecraft {
 repositories {
     maven { url = 'https://maven.minecraftforge.net' }
     mavenCentral()
-    // Bu bağımlılık adreslerini kullandığınız workspace'e göre düzenlemeniz gerekebilir.
     maven { url = 'https://cursemaven.com' }
 }
 
 dependencies {
-    // Curse Maven file id'leri mod paketlerinize göre değişebilir; gerekirse elle düzeltin.
     deobfCompile "curse.maven:projecte-226410:2702991"
     deobfCompile "curse.maven:refined-storage-243076:2940914"
 }
