@@ -20,26 +20,14 @@ jobs:
           distribution: temurin
           java-version: '8'
 
-      - name: Gradle cache
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Wrapper yoksa Gradle kur
+      - name: Gradle 4.10.3 indir
         run: |
-          if [ ! -f "./gradlew" ]; then
-            sudo apt-get update
-            sudo apt-get install -y gradle
-          fi
+          wget https://services.gradle.org/distributions/gradle-4.10.3-bin.zip
+          unzip gradle-4.10.3-bin.zip
 
-      - name: Wrapper varsa build al
-        if: ${{ hashFiles('gradlew') != '' }}
+      - name: Build al
         run: |
-          chmod +x gradlew
-          ./gradlew build --stacktrace
-
-      - name: Wrapper yoksa sistem Gradle ile build al
-        if: ${{ hashFiles('gradlew') == '' }}
-        run: |
-          gradle build --stacktrace
+          ./gradle-4.10.3/bin/gradle build --no-daemon --stacktrace
 
       - name: JAR dosyalarını yükle
         uses: actions/upload-artifact@v4
