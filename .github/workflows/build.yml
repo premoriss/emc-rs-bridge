@@ -1,0 +1,50 @@
+name: Build Forge 1.12.2 Mod
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kodu indir
+        uses: actions/checkout@v4
+
+      - name: Java 8 kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Wrapper yoksa Gradle kur
+        run: |
+          if [ ! -f "./gradlew" ]; then
+            sudo apt-get update
+            sudo apt-get install -y gradle
+          fi
+
+      - name: Wrapper varsa build al
+        if: ${{ hashFiles('gradlew') != '' }}
+        run: |
+          chmod +x gradlew
+          ./gradlew build --stacktrace
+
+      - name: Wrapper yoksa sistem Gradle ile build al
+        if: ${{ hashFiles('gradlew') == '' }}
+        run: |
+          gradle build --stacktrace
+
+      - name: JAR dosyalarını yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-mod-jars
+          path: |
+            **/build/libs/*.jar
+          if-no-files-found: warn
