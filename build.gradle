@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+group = 'com.enesbilgin'
+version = '1.0.0'
+archivesBaseName = 'EMCRSBridge'
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava.options.encoding = 'UTF-8'
+
+minecraft {
+    version = '1.12.2-14.23.5.2859'
+    runDir = 'run'
+    mappings = 'snapshot_20171003'
+}
+
+repositories {
+    maven { url = 'https://maven.minecraftforge.net' }
+    mavenCentral()
+    // Bu bağımlılık adreslerini kullandığınız workspace'e göre düzenlemeniz gerekebilir.
+    maven { url = 'https://cursemaven.com' }
+}
+
+dependencies {
+    // Curse Maven file id'leri mod paketlerinize göre değişebilir; gerekirse elle düzeltin.
+    deobfCompile "curse.maven:projecte-226410:2702991"
+    deobfCompile "curse.maven:refined-storage-243076:2940914"
+}
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}

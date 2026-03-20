@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "emcrsbridge",
+    "name": "EMC RS Bridge",
+    "description": "ProjectE ile Refined Storage arasında EMC tabanlı item köprüsü ekler.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["OpenAI"],
+    "credits": "Generated example addon scaffold",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": ["required-after:forge@[14.23.5.2859,);required-after:projecte;required-after:refinedstorage"]
+  }
+]
